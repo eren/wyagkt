@@ -2,6 +2,7 @@ package com.github.eren.wyagkt.models
 
 import java.io.File
 import java.nio.file.Paths
+import org.ini4j.Wini
 
 /**
  * Class to hold .git repository as an object
@@ -15,9 +16,6 @@ import java.nio.file.Paths
  */
 class GitRepository(workTree: String) {
     val gitDir : String = Paths.get(workTree, ".git").toString()
-
-    // object to hold config file which has an ini format
-    var gitConfig = null
 
     /**
      * Initialize git repository
@@ -33,6 +31,13 @@ class GitRepository(workTree: String) {
 
         File(repoPath("description")).writeText("Unnamed repository; edit this file 'description' to name the repository.\n")
         File(repoPath("HEAD")).writeText("ref: refs/heads/master\n")
+        File(repoPath("config")).writeText("")
+
+        val gitConfig = Wini(File(repoPath("config")))
+        gitConfig.put("core", "repositoryformatversion", "0")
+        gitConfig.put("core", "filemode", "false")
+        gitConfig.put("core", "bare", "false")
+        gitConfig.store()
     }
 
     /**
@@ -60,9 +65,6 @@ class GitRepository(workTree: String) {
         if (!gitDirectory.exists() || !gitDirectory.isDirectory) {
             return false
         }
-
-        // TODO: check for config file type here
-        val configFile = File(repoPath("config"))
 
         return true
     }
