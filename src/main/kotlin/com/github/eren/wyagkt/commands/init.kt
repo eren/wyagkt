@@ -7,22 +7,29 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.inSet
 import org.kodein.di.generic.provider
+import java.nio.file.Paths
 import com.github.eren.wyagkt.models.GitRepository
 import com.github.eren.wyagkt.exceptions.NotAGitRepositoryException
+import com.github.eren.wyagkt.utils.repoFind
 
 class Init : CliktCommand(
     help = """Initializes a git repository""") {
     private val repo: String by option("-r", "--repository", help="repository location (default: .)")
-        .default(".")
+        .default("")
 
     override fun run() {
-        echo("Initializing repository $repo")
-
         try {
-            val gitRepository = GitRepository(".")
-            echo(gitRepository.gitDir)
+            val repo: GitRepository = repoFind(Paths.get("").toAbsolutePath().toString())
+            if (repo.isValid()) {
+                echo("Repository already initialized. Skipping")
+            }
         } catch (e: NotAGitRepositoryException) {
-            echo("Error: not a git repository")
+            val workTree = Paths.get(repo).toAbsolutePath().toString()
+            val gitRepository = GitRepository(workTree)
+
+            echo("Initializing git repository at ${gitRepository.gitDir}")
+
+            gitRepository.initialize()
         }
     }
 }

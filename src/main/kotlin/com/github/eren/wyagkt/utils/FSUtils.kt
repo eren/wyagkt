@@ -1,15 +1,32 @@
 package com.github.eren.wyagkt.utils
 
+import com.github.eren.wyagkt.exceptions.NotAGitRepositoryException
+import java.nio.file.Paths
 import com.github.eren.wyagkt.models.GitRepository
 
-
 /**
- * Recursively finds a .git directory
+ * Finds a .git directory by iterating over the path
  *
- * @param String directory: directory to recursively find .git directory
+ * @param workTree String: absolute path to recursively find .git
  * @return GitRepository
  */
-fun repo_find(workTree: String) : GitRepository {
-    return GitRepository(workTree)
+fun repoFind(workTree: String) : GitRepository {
+    var gitRepository = GitRepository(workTree)
+    var parent = Paths.get(workTree).parent
 
+    if (gitRepository.isValid()) {
+        return gitRepository
+    }
+
+    while (parent.toString() != "/") {
+        gitRepository = GitRepository(parent.toString())
+
+        if (gitRepository.isValid()) {
+            return gitRepository
+        } else {
+            parent = parent.parent
+        }
+    }
+
+    throw NotAGitRepositoryException()
 }
