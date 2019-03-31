@@ -8,8 +8,6 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.setBinding
 
-data class Repo(var home: String, val config: MutableMap<String, String>, var verbose: Boolean)
-
 class Cli : CliktCommand(
     help = """wyagkt is a git implementation written from scratch with Kotlin""") {
     init {

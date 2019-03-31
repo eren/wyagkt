@@ -7,7 +7,7 @@ import java.nio.file.Paths
  * Class to hold .git repository as an object
  *
  * This class requires a work tree and derives git directory by appending .git to
- * the directory while checking if the .git repository is valid
+ * the directory
  *
  * It requires absolute paths to work.
  *
@@ -31,8 +31,8 @@ class GitRepository(workTree: String) {
         File(repoPath("refs", "tags")).mkdirs()
         File(repoPath("refs", "heads")).mkdirs()
 
-        val description = File(repoPath("description"))
-        description.writeText("Unnamed repository; edit this file 'description' to name the repository.\n")
+        File(repoPath("description")).writeText("Unnamed repository; edit this file 'description' to name the repository.\n")
+        File(repoPath("HEAD")).writeText("ref: refs/heads/master\n")
     }
 
     /**
@@ -43,6 +43,7 @@ class GitRepository(workTree: String) {
      *  repoDir("refs", "tags") returns $workTree/.git/refs/tags
      *
      * @param params String: variable arguments
+     * @return String
      */
     private fun repoPath(vararg params: String) : String {
         return Paths.get(gitDir, *params).toString()
