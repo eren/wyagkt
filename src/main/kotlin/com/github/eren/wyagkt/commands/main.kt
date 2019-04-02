@@ -24,6 +24,7 @@ fun main(args: Array<String>) {
     val kodein = Kodein {
         bind() from setBinding<CliktCommand>()
         import(initModule)
+        import(catFileModule)
     }
 
     val commands: Set<CliktCommand> by kodein.instance()

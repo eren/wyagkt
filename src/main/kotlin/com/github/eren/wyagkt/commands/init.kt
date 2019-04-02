@@ -19,7 +19,7 @@ class Init : CliktCommand(
 
     override fun run() {
         try {
-            val repo: GitRepository = repoFind(Paths.get("").toAbsolutePath().toString())
+            val repo: GitRepository = repoFind()
             if (repo.isValid()) {
                 echo("Repository already initialized. Skipping")
             }

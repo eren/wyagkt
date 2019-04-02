@@ -10,7 +10,7 @@ import com.github.eren.wyagkt.models.GitRepository
  * @param workTree String: absolute path to recursively find .git
  * @return GitRepository
  */
-fun repoFind(workTree: String) : GitRepository {
+fun repoFind(workTree: String = Paths.get("").toAbsolutePath().toString()) : GitRepository {
     var gitRepository = GitRepository(workTree)
     var parent = Paths.get(workTree).parent
 
