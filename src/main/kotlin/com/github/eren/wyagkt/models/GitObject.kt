@@ -7,9 +7,9 @@ package com.github.eren.wyagkt.models
  * @param type type of the object (blob, tree, commit)
  */
 interface GitObject {
-    val contents : String
     val type: String
+    val contents : String
 
-    fun serialize()
-    fun deserialize()
+    fun serialize() : String
+    fun deserialize() : String
 }

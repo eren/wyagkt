@@ -5,6 +5,7 @@ import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.validate
 import com.github.eren.wyagkt.exceptions.NotAGitRepositoryException
 import com.github.eren.wyagkt.exceptions.ObjectNotFoundException
+import com.github.eren.wyagkt.exceptions.UnknownObjectTypeException
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.inSet
@@ -29,11 +30,13 @@ class `Cat-File` : CliktCommand(
         try {
             val repo: GitRepository = repoFind()
             val obj = repo.objectRead(`object`)
-            obj.deserialize()
+            print(obj.deserialize())
+
         } catch (e: Exception) {
             when (e) {
                 is NotAGitRepositoryException -> { echo(e.message) }
                 is ObjectNotFoundException -> { echo(e.message) }
+                is UnknownObjectTypeException -> { echo(e.message) }
                 else -> throw e
             }
         }

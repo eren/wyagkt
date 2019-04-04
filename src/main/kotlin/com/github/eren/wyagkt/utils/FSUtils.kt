@@ -12,6 +12,7 @@ import java.util.zip.*
  * Finds a .git directory by iterating over the path
  *
  * @return GitRepository representing .git directory
+ * @throws NotAGitRepositoryException
  */
 fun repoFind() : GitRepository {
     val workTree: String = Paths.get("").toAbsolutePath().toString()

@@ -17,7 +17,6 @@ class `Hash-Object` : CliktCommand(
     help = """Hashes the object and optionally writes the file""") {
 
     private val file by argument().file(exists=true)
-    private val type by option("-t", "--type", help="Type [blob, commit, tree] (default: blob)").default("blob")
 
     override fun run() {
         try {
