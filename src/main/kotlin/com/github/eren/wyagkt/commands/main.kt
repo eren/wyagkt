@@ -25,6 +25,7 @@ fun main(args: Array<String>) {
         bind() from setBinding<CliktCommand>()
         import(initModule)
         import(catFileModule)
+        import(hashObjectModule)
     }
 
     val commands: Set<CliktCommand> by kodein.instance()
