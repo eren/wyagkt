@@ -1,13 +1,19 @@
 package com.github.eren.wyagkt.models
 
-class GitBlob(override val type : String, override val contents : String) : GitObject {
-    val escapeChar = '\u0000'
+/**
+ * Class to hold git blob objects
+ */
+class GitBlob(override val size: Int,
+              override val contents : String,
+              override val type : String = "blob"
+) : GitObject {
+    private val escapeChar = "\u0000"
 
     override fun deserialize() : String {
-        return contents.split(escapeChar)[1]
+        return contents
     }
 
     override fun serialize() : String {
-        return contents
+        return "$type $size$escapeChar$contents"
     }
 }

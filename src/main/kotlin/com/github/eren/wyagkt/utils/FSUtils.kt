@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.io.File
 import com.github.eren.wyagkt.exceptions.NotAGitRepositoryException
 import com.github.eren.wyagkt.models.GitRepository
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.zip.*
 

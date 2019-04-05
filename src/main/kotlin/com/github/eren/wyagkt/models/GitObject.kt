@@ -8,6 +8,7 @@ package com.github.eren.wyagkt.models
  */
 interface GitObject {
     val type: String
+    val size: Int
     val contents : String
 
     fun serialize() : String

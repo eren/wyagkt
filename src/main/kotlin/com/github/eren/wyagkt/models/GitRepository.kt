@@ -92,12 +92,17 @@ class GitRepository(workTree: String) {
         val escapeChar = '\u0000'
 
         val splitted = contents.split(escapeChar)
-        val type = splitted.first().split(' ').first()
+        val objectContent : String = splitted.last()
+
+        val typeAndSize = splitted.first()
+        val type : String = typeAndSize.split(' ').first()
+        val size : Int = typeAndSize.split(' ').last().toInt()
 
         // TODO: check for the object size, we do not need it for now.
 
         when (type) {
-            "blob" -> return GitBlob(type, contents)
+            "blob" -> return GitBlob(size, objectContent)
+            "tree" -> return GitTree(size, objectContent)
         }
 
         throw UnknownObjectTypeException(sha1sum, type)

@@ -13,6 +13,9 @@ import org.kodein.di.generic.provider
 import com.github.eren.wyagkt.models.GitRepository
 import com.github.eren.wyagkt.utils.repoFind
 
+/**
+ * Cat the blob from its object hash
+ */
 class `Cat-File` : CliktCommand(
     help = """Reads an object from the repository
         |
