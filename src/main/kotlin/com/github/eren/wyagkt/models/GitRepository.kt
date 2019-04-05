@@ -84,6 +84,7 @@ class GitRepository(workTree: String) {
      * @param sha1sum String: (partial) sha1sum of the object. Value must be greater than 4
      * @return GitObject
      * @throws ObjectNotFoundException
+     * @throws UnknownObjectTypeException
      */
     fun objectRead(sha1sum: String) : GitObject {
         val obj = findObject(sha1sum)
