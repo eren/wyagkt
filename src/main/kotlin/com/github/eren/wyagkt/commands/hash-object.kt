@@ -23,6 +23,7 @@ class `Hash-Object` : CliktCommand(
         val fileContents = File(file.toString()).readText()
         val size = fileContents.length
         val gitObject : GitObject = GitBlob(size, fileContents)
+
         println(gitObject.serialize().sha1sum)
     }
 }

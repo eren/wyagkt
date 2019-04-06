@@ -1,6 +1,5 @@
 package com.github.eren.wyagkt.models
 
-import com.github.eren.wyagkt.commands.hashObjectModule
 import com.github.eren.wyagkt.exceptions.ObjectNotFoundException
 import com.github.eren.wyagkt.exceptions.UnknownObjectTypeException
 import com.github.eren.wyagkt.utils.decompress
