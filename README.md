@@ -1,6 +1,10 @@
 # Write Yourself a Git Implemented in Kotlin
 This repository is a Kotlin implementation for https://wyag.thb.lt/
 
+
+<p align="center"><img src="/assets/wyagkt.gif?raw=true"/></p>
+
+
 ## Development
 When you import the project into Intellij IDEA, dependencies are not visible and
 auto completion does not work. To overcome this problem, simply run:
