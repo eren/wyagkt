@@ -1,5 +1,6 @@
 package com.github.eren.wyagkt.models
 
+import com.github.eren.wyagkt.commands.hashObjectModule
 import com.github.eren.wyagkt.exceptions.ObjectNotFoundException
 import com.github.eren.wyagkt.exceptions.UnknownObjectTypeException
 import com.github.eren.wyagkt.utils.decompress
@@ -93,17 +94,35 @@ class GitRepository(workTree: String) {
         val escapeChar = '\u0000'
 
         val splitted = contents.split(escapeChar)
-        val objectContent : String = splitted.last()
 
-        val typeAndSize = splitted.first()
-        val type : String = typeAndSize.split(' ').first()
-        val size : Int = typeAndSize.split(' ').last().toInt()
+        val typeAndSize = splitted.first().split(' ')
+        val type : String = typeAndSize.first()
+        val size : Int = typeAndSize.last().toInt()
 
         // TODO: check for the object size, we do not need it for now.
 
         when (type) {
-            "blob" -> return GitBlob(size, objectContent)
-            "tree" -> return GitTree(size, objectContent)
+            "blob" -> return GitBlob(size, splitted.last())
+            "tree" -> {
+                /**
+                 * GitTree has \0 splitted format. When we split by [escapeChar], we get incorrect content
+                 * for the object. To overcome the problem, we first use CharArray to omit the first \0
+                 * splitted string and get the rest.
+                 *
+                 * Git Tree format is:
+                 *  'tree 212\x0040000 .idea\x00\xd80\xa3:g\'\xda\x12+\'\xf2@\xc3\x91\xff+t\x16\xa2C
+                 *
+                 *  First line is the object type followed by object size before \x00. We are effectiely omitting
+                 *  the first value before first \x00
+                 *
+                 * **/
+                val contentArray = contents.toCharArray().drop(contents.indexOf(escapeChar)+1)
+                val output = StringBuilder()
+                contentArray.forEach { output.append(it) }
+
+                return GitTree(size, output.toString())
+            }
+            "commit" -> return GitCommit(size, splitted.last())
         }
 
         throw UnknownObjectTypeException(sha1sum, type)

@@ -34,14 +34,8 @@ class `Cat-File` : CliktCommand(
             val repo: GitRepository = repoFind()
             val obj = repo.objectRead(`object`)
 
-            if (obj.type != "blob") {
-                // Our deserialize methods convert the object into printable strings, we can simply "cat-file" a
-                // tree object but let's only work on blobs.
-                println("Error: type of the object is a ${obj.type}, not a blob. Exiting...")
-                System.exit(1)
-            } else {
+
                 print(obj.deserialize())
-            }
 
         } catch (e: Exception) {
             when (e) {
