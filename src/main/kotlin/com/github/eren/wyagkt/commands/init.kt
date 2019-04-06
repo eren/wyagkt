@@ -13,9 +13,7 @@ import com.github.eren.wyagkt.exceptions.NotAGitRepositoryException
 import com.github.eren.wyagkt.utils.repoFind
 
 class Init : CliktCommand(
-    help = """Initializes a git repository""") {
-    private val repo: String by option("-r", "--repository", help="repository location (default: .)")
-        .default("")
+    help = """Initializes a git repository within current dir""") {
 
     override fun run() {
         try {
@@ -24,7 +22,7 @@ class Init : CliktCommand(
                 echo("Repository already initialized. Skipping")
             }
         } catch (e: NotAGitRepositoryException) {
-            val workTree = Paths.get(repo).toAbsolutePath().toString()
+            val workTree = Paths.get("").toAbsolutePath().toString()
             val gitRepository = GitRepository(workTree)
 
             echo("Initializing git repository at ${gitRepository.gitDir}")
