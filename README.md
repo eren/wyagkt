@@ -10,7 +10,7 @@ When you import the project into Intellij IDEA, dependencies are not visible and
 auto completion does not work. To overcome this problem, simply run:
 
 ```
-gradle idea
+./gradlew idea
 ```
 
 This will create `*.iml`, `*.ipr` and `*.iws` files and all the dependencies will be 
@@ -29,5 +29,5 @@ To distribute the binary, simply run the following gradle task and the output wi
 be available at `build/distributions/wyagkt.tar`
 
 ```
-gradle distTar
+./gradlew distTar
 ```
