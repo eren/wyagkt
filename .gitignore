@@ -4,4 +4,6 @@
 *.swp
 *.idea
 .gradle
+out/
+gradle/
 build/
